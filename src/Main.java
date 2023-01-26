@@ -1,9 +1,22 @@
 package src;
 
+import java.awt.*;
+
 public class Main {
 
     public static void main(String[] args) {
-        Person p = new Person("Mustermann","Max",25,new Address("Teststraße",123,73245,"Testort"));
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    GUI frame = new GUI();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        /*Person p = new Person("Mustermann","Max",25,new Address("Teststraße",123,73245,"Testort"));
         String streetHouseNumber, postalCodeLocation, streetHouseNumberNew, postalCodeLocationNew;
         streetHouseNumber = p.getAddress().getStreet().concat(" "+ p.getAddress().getHouseNumber());
         postalCodeLocation = String.valueOf(p.getAddress().getPostalCode()).concat(" "+p.getAddress().getLocation());
@@ -26,6 +39,6 @@ public class Main {
         System.out.println(p.getFirstName()+" "+p.getLastName());
         System.out.println("***NAMENSÄNDERUNG***");
         p.nameChange("Marc-Oliver","Petersen");
-        System.out.println(p.getFirstName()+" "+p.getLastName());
+        System.out.println(p.getFirstName()+" "+p.getLastName());*/
     }
 }

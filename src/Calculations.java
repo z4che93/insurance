@@ -4,15 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Calculations {
-    public static final List<Double> amountLivings = new ArrayList<>();
+    public static final List<Double> AMOUNTLIVINGS = new ArrayList<>();
     public static final int OMEGA = 121;
 
     public Calculations() {
-        amountLivings.add(0, 1000000.00);
+        AMOUNTLIVINGS.add(0, 1000000.00);
         for (int i = 1; i < OMEGA; i++) {
-            amountLivings.add(i, amountLivings.get(i - 1) * _px(i-1));
+            AMOUNTLIVINGS.add(i, AMOUNTLIVINGS.get(i - 1) * _px(i-1));
         }
     }
+
+    /**
+     * Calculates the discont factor by given rate
+     *
+     * @param rate: Rate
+     * @return: Discont factor
+     */
+    public double _discontFactor(double rate){
+        return 1/(1+(rate/100));
+    }
+
     /**
      * Get the probability of dying from a person by age
      *
@@ -41,7 +52,7 @@ public class Calculations {
      * @return: Probability that the person survived the duration
      */
     public double _npx(int age, int dur){
-        return amountLivings.get(age+dur)/amountLivings.get(age);
+        return AMOUNTLIVINGS.get(age+dur)/ AMOUNTLIVINGS.get(age);
     }
 
     /**
@@ -60,22 +71,24 @@ public class Calculations {
      *
      * @param age: Age of person
      * @param dur: Duration
-     * @param rate: Discont factor
+     * @param rate: Rate
      * @return: Present value
      */
     public double _nAx(int age, int dur, double rate){
-        return (_Mx(age,rate)-_Mx(age+dur,rate))/_Dx(age,rate);
+        double discontFactor = _discontFactor(rate);
+        return (_Mx(age,discontFactor)-_Mx(age+dur,discontFactor))/_Dx(age,discontFactor);
     }
 
     /**
      * Calculate the present value from a term life insurance
      *
      * @param age: Age of person
-     * @param rate: Discont factor
+     * @param rate: Rate
      * @return: Present value
      */
     public double _Ax(int age,double rate){
-        return _Mx(age,rate)/_Dx(age,rate);
+        double discontFactor = _discontFactor(rate);
+        return _Mx(age,discontFactor)/_Dx(age,discontFactor);
     }
 
     /**
@@ -83,11 +96,12 @@ public class Calculations {
      *
      * @param age: Age of person
      * @param dur: Duration
-     * @param rate: Discont factor
+     * @param rate: Rate
      * @return: Present value
      */
     public double _nEx(int age, int dur, double rate){
-        return _Dx(age+dur,rate)/_Dx(age,rate);
+        double discontFactor = _discontFactor(rate);
+        return _Dx(age+dur,discontFactor)/_Dx(age,discontFactor);
     }
 
     /**
@@ -95,22 +109,24 @@ public class Calculations {
      *
      * @param age: Age of person
      * @param dur: Duration
-     * @param rate: Discont factor
+     * @param rate: Rate
      * @return: Present value
      */
     public double _Axn(int age, int dur, double rate){
-        return (_Mx(age,rate)-_Mx(age+dur,rate)+_Dx(age+dur,rate))/_Dx(age,rate);
+        double discontFactor = _discontFactor(rate);
+        return (_Mx(age,discontFactor)-_Mx(age+dur,discontFactor)+_Dx(age+dur,discontFactor))/_Dx(age,discontFactor);
     }
 
     /**
      * Calculate the advance life annuity
      *
      * @param age: Age of person
-     * @param rate: Discont factor
+     * @param rate: Rate
      * @return: Present-value factor
      */
     public double _aex(int age, double rate){
-        return _Nx(age,rate)/_Dx(age,rate);
+        double discontFactor = _discontFactor(rate);
+        return _Nx(age,discontFactor)/_Dx(age,discontFactor);
     }
 
     /**
@@ -118,11 +134,12 @@ public class Calculations {
      *
      * @param age: Age of person
      * @param dur: Duration
-     * @param rate: Discont factor
+     * @param rate: Rate
      * @return: Present-value factor
      */
     public double _aexn(int age, int dur, double rate){
-        return (_Nx(age,rate)-_Nx(age+dur,rate))/_Dx(age,rate);
+        double discontFactor = _discontFactor(rate);
+        return (_Nx(age,discontFactor)-_Nx(age+dur,discontFactor))/_Dx(age,discontFactor);
     }
 
     /**
@@ -130,11 +147,12 @@ public class Calculations {
      *
      * @param age: Age of person
      * @param delay: Delay of the interval
-     * @param rate: Discont factor
+     * @param rate: Rate
      * @return: Present-value factor
      */
     public double _maex(int age, int delay, double rate){
-        return _Nx(age+delay,rate)/_Dx(age,rate);
+        double discontFactor = _discontFactor(rate);
+        return _Nx(age+delay,discontFactor)/_Dx(age,discontFactor);
     }
 
     /**
@@ -143,22 +161,24 @@ public class Calculations {
      * @param age: Age of person
      * @param delay: Delay of the interval
      * @param dur: Duration
-     * @param rate: Discont factor
+     * @param rate: Rate
      * @return: Present-value factor
      */
     public double _maexn(int age, int delay, int dur, double rate){
-        return (_Nx(age+delay,rate)-_Nx(age+delay+dur,rate))/_Dx(age,rate);
+        double discontFactor = _discontFactor(rate);
+        return (_Nx(age+delay,discontFactor)-_Nx(age+delay+dur,discontFactor))/_Dx(age,discontFactor);
     }
 
     /**
      * Calculate the annuity immediate
      *
      * @param age: Age of person
-     * @param rate: Discont factor
+     * @param rate: Rate
      * @return: Present-value factor
      */
     public double _ax(int age, double rate){
-        return _Nx(age+1,rate)/_Dx(age,rate);
+        double discontFactor = _discontFactor(rate);
+        return _Nx(age+1,discontFactor)/_Dx(age,discontFactor);
     }
 
     /**
@@ -166,11 +186,12 @@ public class Calculations {
      *
      * @param age: Age of person
      * @param dur: Duration
-     * @param rate: Discont factor
+     * @param rate: Rate
      * @return: Present-value factor
      */
     public double _axn(int age, int dur, double rate){
-        return (_Nx(age+1,rate)-_Nx(age+dur+1,rate))/_Dx(age,rate);
+        double discontFactor = _discontFactor(rate);
+        return (_Nx(age+1,discontFactor)-_Nx(age+dur+1,discontFactor))/_Dx(age,discontFactor);
     }
 
     /**
@@ -179,11 +200,12 @@ public class Calculations {
      * @param age: Age of person
      * @param delay: Delay of the interval
      * @param dur: Duration
-     * @param rate: Discont factor
+     * @param rate: Rate
      * @return: Present-value factor
      */
     public double _maxn(int age, int delay, int dur, double rate){
-        return (_Nx(age+delay+1,rate)-_Nx(age+delay+dur+1,rate))/_Dx(age,rate);
+        double discontFactor = _discontFactor(rate);
+        return (_Nx(age+delay+1,discontFactor)-_Nx(age+delay+dur+1,discontFactor))/_Dx(age,discontFactor);
     }
 
     /**
@@ -191,33 +213,36 @@ public class Calculations {
      *
      * @param age: Age of person
      * @param delay: Delay of the interval
-     * @param rate: Discont factor
+     * @param rate: Rate
      * @return: Present-value factor
      */
     public double _max(int age, int delay, double rate){
-        return _Nx(age+delay+1,rate)/_Dx(age,rate);
+        double discontFactor = _discontFactor(rate);
+        return _Nx(age+delay+1,discontFactor)/_Dx(age,discontFactor);
     }
 
     /**
      * Calculates the commutation figures for the discounted dyings
      *
      * @param age: Age of person
-     * @param rate: Discont factor
+     * @param rate: Rate
      * @return: Commutation figure
      */
     public double _Cx(int age, double rate){
-        return _qx(age)*amountLivings.get(age)*Math.pow(rate,age+1);
+        double discontFactor = _discontFactor(rate);
+        return _qx(age)* AMOUNTLIVINGS.get(age)*Math.pow(discontFactor,age+1);
     }
 
     /**
      * Calculates the commutation figures for the discounted livings
      *
      * @param age: Age of person
-     * @param rate: Discont factor
+     * @param rate: Rate
      * @return: Commutation figure
      */
     public double _Dx(int age, double rate){
-        return amountLivings.get(age)*Math.pow(rate,age);
+        double discontFactor = _discontFactor(rate);
+        return AMOUNTLIVINGS.get(age)*Math.pow(discontFactor,age);
     }
 
     /**

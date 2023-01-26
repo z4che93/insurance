@@ -14,7 +14,7 @@ public enum InsuranceType {
     RENTENVERSICHERUNG("LEBENSVERSICHERUNG"),
     FONDSGEBUNDENELEBENSVERSICHERUNG("LEBENSVERSICHERUNG");
 
-    private static final List<InsuranceType> listTypeInsurance;
+    public static final List<InsuranceType> listTypeInsurance;
     private final String insuranceDivision;
 
     InsuranceType(String insuranceDivision) {
