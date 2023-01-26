@@ -1,0 +1,93 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Person{
+-firstName: String
+-lastName: String
+-age: int
+-address: Address
+-listContracts: ArrayList<Contract>
++Person(String, String, int, Address)
+-setFirstName(String)
+-setLastName(String)
++setContract(Contract)
++getFirstName(): String
++getLastName(): String
++getAge(): int
++getAddress(): Address
++getContract(): ArrayList<Contract>
++getVContract(int): Contract
++hasContract(int): boolean
++move(Address, Address)
+}
+class Address{
+-street: String
+-houseNumber: int
+-postalCode: int
+-location: String
++Address(String, int, int, String)
++setStreet(String)
++setHouseNumber(int)
++setPostalcode(int)
++setLocation(String)
++getStreet(): String
++getHouseNumber(): int
++getPostalCode(): int
++getLocation(): String
+}
+class Insurance{
+-insuranceName: String
+-insuranceDivision: String
+-listContracts: ArrayList<Contract>
++Insurance(String, String)
++setInsuranceName(String)
++getInsuranceName(): String
++getInsuranceDivision(): String
+}
+class Contract{
+-contractNumber: int
+-insurance: Insurance
+-typeInsurance: TypeOfInsurance
+-person: Person
+-contractConditions: ContractualConditions
++Contract(int, Insurance, TypeOfInsurance, Person, ContractualConditions)
++getContractNumber(): int
++getInsurance(): String
++getTypeInsurance(): String
++getPerson(): Person
++getContractConditions(): ContractualConditions
+}
+class ContractualConditions{
+-entryAge: int
+-duration: int
++ContractualConditions(int, int)
++setDuration(int)
++getEntryAge(): int
++getDuration(): int
+}
+
+enum TypeOfInsurance{
+    RISIKOLEBENSVERSICHERUNG
+    BERUFSUNFAEHIGKEITSVERSICHERUNG
+    KRANKENVERSICHERUNG
+    HAFTPFLICHTVERSICHERUNG
+    KFZVERSICHERUNG
+    PRIVATE_KRANKENVERSICHERUNG
+    RENTENVERSICHERUNG
+    FONDSGEBUNDENELEBENSVERSICHERUNG
+-{static}final listTypeInsurance: List<TypeOfInsurance>
+-final insuranceDivision: String
+-TypeOfInsurance(String)
++{static}getValues(): List<TypeOfInsurance>
++getTypeInsurance(TypeOfInsurance): String
+}
+
+Address "has one" -- Person
+
+Insurance -- "has"Contract
+Insurance -- "has many"TypeOfInsurance
+
+Person -- "has" Contract
+
+Contract -- "has one"ContractualConditions
+@enduml
