@@ -8,7 +8,7 @@ public class Person{
     private String firstName, lastName;
     private int age;
     private Address address;
-    private ArrayList<Contract> listContracts = new ArrayList<Contract>();
+    private ArrayList<Contract> listContracts = new ArrayList<>();
 
     public Person(String lastName, String firstName, int age, Address address) {
         this.lastName = lastName;
@@ -41,9 +41,8 @@ public class Person{
         return null;
     }
     public Contract getVertrag(int vNummer){
-        Iterator<Contract> iter = this.listContracts.iterator();
-        while(iter.hasNext()){
-            if(vNummer == iter.next().getContractNumber()){
+        for (Contract listContract : this.listContracts) {
+            if (vNummer == listContract.getContractNumber()) {
                 return this.listContracts.get(vNummer);
             }
         }
@@ -51,9 +50,8 @@ public class Person{
     }
 
     public boolean hasContract(int vNummer){
-        Iterator<Contract> iter = this.listContracts.iterator();
-        while(iter.hasNext()){
-            if(vNummer == iter.next().getContractNumber()){
+        for (Contract listContract : this.listContracts) {
+            if (vNummer == listContract.getContractNumber()) {
                 return true;
             }
         }

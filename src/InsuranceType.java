@@ -17,7 +17,7 @@ public enum InsuranceType {
     private static final List<InsuranceType> listTypeInsurance;
     private final String insuranceDivision;
 
-    private InsuranceType(String insuranceDivision) {
+    InsuranceType(String insuranceDivision) {
         this.insuranceDivision = insuranceDivision;
     }
 
@@ -25,13 +25,11 @@ public enum InsuranceType {
         return Collections.unmodifiableList(listTypeInsurance);
     }
     public String getTypeInsurance(InsuranceType typeInsurance){
-        return typeInsurance.insuranceDivision.toString();
+        return typeInsurance.insuranceDivision;
     }
 
     static {
-        listTypeInsurance = new ArrayList<InsuranceType>();
-        for(InsuranceType typeInsurance : InsuranceType.values()){
-            InsuranceType.listTypeInsurance.add(typeInsurance);
-        }
+        listTypeInsurance = new ArrayList<>();
+        Collections.addAll(InsuranceType.listTypeInsurance, InsuranceType.values());
     }
 }
